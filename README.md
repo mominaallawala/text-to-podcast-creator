@@ -1,91 +1,135 @@
-# AI Apocalypse Podcast Studio
+# Podcast Studio
 
-This project creates a short podcast episode from three articles about the risks and realities of an AI apocalypse.
+A small Python pipeline that turns UTF-8 source material into a podcast script and an MP3 using the OpenAI API.
 
-The application pipeline is:
+🎙️ AI Apocalypse? — Podcast Studio
 
-```text
-Three PDF articles -> text extraction -> LLM script -> MP3 audio -> Gradio interface
-```
+## About
 
-The generated podcast uses two actors:
+_AI Apocalypse?_ is a short podcast that looks at the big fears around artificial intelligence: job loss, misinformation, loss of control, the "superintelligence" scenario.
 
-- **Ana**: curious host who asks practical questions and pushes back on hype; voice `nova`.
-- **Rui**: expert host who explains evidence and speculation clearly; voice `alloy`.
+It asks how much of each fear is real and how much is hype. The question mark is deliberate: we're not predicting the end of the world. We're testing the claims.
 
-## Setup
+## Format
 
-Create and activate the project environment:
+- **Length:** ~5–10 min per episode
+- **Style:** Conversational, with two hosts. Each episode takes one fear, lays out the arguments on each side, and ends with a takeaway.
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
+- **Audience:** AI Curious non-experts, professionals wondering how AI will affect their work
 
-Install the dependencies:
+## Episode ideas
 
-```bash
-python -m pip install -r requirements.txt
-```
+1. Will AI take my job?
+2. Deepfakes & the end of trust
+3. Who's in control: alignment, explained simply
+4. Doom vs. hype: separating signal from noise
 
-The application uses `ffmpeg` through `pydub` to combine the speaker segments into one MP3. On macOS, install it with:
+## How we built it
 
-```bash
-brew install ffmpeg
-```
+We used AI tools across the whole workflow: research, scripting, voice generation, audio editing and cover art.
 
-Create a `.env` file in the project root and add your API key:
+## Team
 
-```env
-OPENAI_API_KEY=your_openai_api_key_here
-```
-
-Never commit `.env` or share your API key. The file is excluded through `.gitignore`.
-
-## Run the application
-
-```bash
-python src/main.py
-```
-
-Open the local address shown in the terminal, usually:
-
-```text
-http://127.0.0.1:7860
-```
-
-Upload the three PDF articles and click **Create podcast episode**. The generated script appears in the interface and the MP3 is saved in the `outputs/` folder.
+- Carolina Uchoa
+- Momina Allawala
+- Tamara Kisters
 
 ## Project structure
 
 ```text
-src/
-├── data_processor.py  # Extract and combine PDF text
-├── llm_processor.py   # Generate the podcast script
-├── tts_generator.py   # Generate the MP3 file
-└── main.py            # Gradio application
+podcast-studio/
+├── src/
+│   ├── data_processor.py
+│   ├── llm_processor.py
+│   ├── tts_generator.py
+│   └── main.py
+├── outputs/
+├── requirements.txt
+├── README.md
+├── .env                 # local only; never commit
+└── .gitignore
 ```
 
-`sources.json` contains citation metadata and links only. The original PDF files are local input files and do not need to be redistributed publicly.
+## Setup
 
-## Technical choices
+```bash
+python -m venv .venv
+source .venv/bin/activate       # Windows: .venv\\Scripts\\activate
+pip install -r requirements.txt
+export OPENAI_API_KEY="your-api-key"
+```
+## Installation
 
-- **Python:** Used for a modular and maintainable processing pipeline.
-- **pypdf:** Extracts text from PDF articles.
-- **OpenAI API:** Transforms the articles into structured JSON podcast segments.
-- **JSON:** Separates speakers, voices, and spoken text.
-- **OpenAI Text-to-Speech:** Generates audio for Ana and Rui.
-- **pydub and ffmpeg:** Combines the speaker segments into one MP3.
-- **Gradio:** Provides the web interface.
-- **.env:** Keeps the API key separate from the source code.
+Install the Python dependencies:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+## Run
+
+Put source material in a text file and run:
+
+```bash
+python src/main.py input.txt --output outputs/episode.mp3
+```
+
+Generated audio is kept in `outputs/`, which is ignored by Git except for its `.gitkeep` placeholder.
+
+### Install FFmpeg for audio generation
+
+Podcast Studio uses `pydub` and FFmpeg to combine Ana and Rui’s audio clips
+into one MP3.
+
+1. Install the Python dependencies from the project folder:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. Install FFmpeg separately. On Windows, extract the FFmpeg download and
+   add the `bin` folder that contains `ffmpeg.exe` to your Windows `PATH`.
+3. Reopen the VS Code terminal and check that FFmpeg is available:
+
+   ```bash
+   ffmpeg -version
+   ```
+
+   If the terminal shows version information, you’re ready to generate audio.
+   The finished episode is saved to `outputs/final_episode.mp3`.
 
 ## Sources
 
-The podcast script is based on these three articles. They are used as source material and are not presented as the work of this project’s author.
 
-1. Olsen, S. G., Reinecke-Tellefsen, C. J., & Østergaard, S. D. (2026). “Potentially Harmful Consequences of Artificial Intelligence (AI) Chatbot Use Among Patients With Mental Illness: Early Data From a Large Psychiatric Service System.” *Acta Psychiatrica Scandinavica*, 153, 301–303. https://doi.org/10.1111/acps.70068
+The podcast episode is generated from three PDF papers stored in
+`source_material/`. The hosts are instructed to credit authors and
+publications aloud when discussing the papers.
 
-2. Bareis, J., Ackerl, C., & Heil, R. (2026). “AI going rogue? An integrative narrative review of the tacit assumptions underlying existential AI-risks.” *AI and Ethics*, 6, 152. https://doi.org/10.1007/s43681-025-00928-w
+| File | Authors | Publication | Type |
+|---|---|---|---|
+| AI and the End of the World.pdf | Alexander Rogul | Working paper, Bentley University, 2026 | Working paper |
+| AI going rogue.pdf | Jascha Bareis, Clemens Ackerl, Reinhard Heil | AI and Ethics, 2026 | Peer-reviewed narrative review |
+| Potentially Harmful Consequences of AI.pdf | Sidse Godske Olsen, Christian Jon Reinecke-Tellefsen, Søren Dinesen Østergaard | Acta Psychiatrica Scandinavica, 2026 | Peer-reviewed research letter |
 
-3. Rogul, A. (2026). “AI & the End of the World: What the Data Say.” Working paper.
+### Full references
 
+1. Rogul, A. (2026). *AI & the End of the World: What the Data Say*. Working paper, Bentley University.
+
+2. Bareis, J., Ackerl, C., & Heil, R. (2026). *AI going rogue? An integrative narrative review of the tacit assumptions underlying existential AI-risks*. *AI and Ethics, 6*, 152. https://doi.org/10.1007/s43681-025-00928-w
+
+3. Olsen, S. G., Reinecke-Tellefsen, C. J., & Østergaard, S. D. (2026). *Potentially harmful consequences of artificial intelligence (AI) chatbot use among patients with mental illness: Early data from a large psychiatric service system*. *Acta Psychiatrica Scandinavica, 153*, 301–303. https://doi.org/10.1111/acps.70068
+
+### How source material is used
+
+1. `src/data_processor.py` finds the PDF files in `source_material/`.
+2. It extracts readable text from each PDF.
+3. The extracted text is combined and sent to the language model.
+4. `src/llm_processor.py` generates a structured JSON podcast script.
+5. The JSON script is sent to `src/tts_generator.py` for audio generation.
+
+The current script structure contains:
+
+- the episode title;
+- speaker segments;
+- the speaker name (`Ana` or `Rui`);
+- the spoken text for each segment.

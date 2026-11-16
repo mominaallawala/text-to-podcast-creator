@@ -1,0 +1,29 @@
+[
+  {
+    "id": "AI and the End of the World",
+    "file_name": "AI and the End of the World.pdf",
+    "full_title": "AI & the End of the World: What the Data Say",
+    "author": "Alexander Rogul",
+    "publication": "Working paper, Bentley University",
+    "year": "2026",
+    "type": "Working paper"
+  },
+  {
+    "id": "AI going rogue",
+    "file_name": "AI going rogue.pdf",
+    "full_title": "AI going rogue? An integrative narrative review of the tacit assumptions underlying existential AI-risks",
+    "author": "Jascha Bareis, Clemens Ackerl, Reinhard Heil",
+    "publication": "AI and Ethics",
+    "year": "2026",
+    "type": "Peer-reviewed narrative review"
+  },
+  {
+    "id": "Potentially Harmful Consequences of AI",
+    "file_name": "Potentially Harmful Consequences of AI.pdf",
+    "full_title": "Potentially harmful consequences of artificial intelligence (AI) chatbot use among patients with mental illness",
+    "author": "Sidse Godske Olsen, Christian Jon Reinecke-Tellefsen, Soren Dinesen Ostergaard",
+    "publication": "Acta Psychiatrica Scandinavica",
+    "year": "2026",
+    "type": "Research letter"
+  }
+]
